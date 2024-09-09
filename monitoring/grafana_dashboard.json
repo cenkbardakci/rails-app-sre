@@ -1,0 +1,58 @@
+{
+    "dashboard": {
+      "title": "Rails App Monitoring",
+      "panels": [
+        {
+          "title": "Latency (99th Percentile)",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))",
+              "legendFormat": "Latency (99th Percentile)"
+            }
+          ]
+        },
+        {
+          "title": "Traffic",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "rate(http_request_total[5m])",
+              "legendFormat": "Requests per Minute"
+            }
+          ]
+        },
+        {
+          "title": "Errors",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "rate(http_errors_total[5m])",
+              "legendFormat": "Errors per Minute"
+            }
+          ]
+        },
+        {
+          "title": "CPU Saturation",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "node_cpu_seconds_total{mode!='idle'}",
+              "legendFormat": "CPU Saturation"
+            }
+          ]
+        },
+        {
+          "title": "Apdex Score",
+          "type": "graph",
+          "targets": [
+            {
+              "expr": "(rate(http_apdex_satisfied[5m]) + (rate(http_apdex_tolerating[5m]) / 2)) / rate(http_request_total[5m])",
+              "legendFormat": "Apdex Score"
+            }
+          ]
+        }
+      ]
+    }
+  }
+  
