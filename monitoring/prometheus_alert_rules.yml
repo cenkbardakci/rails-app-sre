@@ -1,45 +1,6 @@
 groups:
   - name: APM Alerts
     rules:
-      - alert: HighLatency
-        expr: histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 1.0
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          description: "99th percentile of request latency is higher than 1 second."
-
-      - alert: HighTraffic
-        expr: rate(http_request_total[5m]) > 1000
-        for: 1m
-        labels:
-          severity: warning
-        annotations:
-          description: "High traffic - over 1000 requests per minute."
-
-      - alert: HighErrorRate
-        expr: rate(http_errors_total[5m]) / rate(http_request_total[5m]) > 0.05
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          description: "More than 5% of requests are failing."
-
-      - alert: HighSaturation
-        expr: node_cpu_seconds_total{mode!="idle"} > 0.9
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          description: "CPU saturation is over 90%."
-
-      - alert: LowApdexScore
-        expr: (rate(http_apdex_satisfied[5m]) + (rate(http_apdex_tolerating[5m]) / 2)) / rate(http_request_total[5m]) < 0.85
-        for: 1m
-        labels:
-          severity: warning
-        annotations:
-          description: "Apdex score is below 0.85."
       - alert: HighCPUUsage
         expr: rate(node_cpu_seconds_total{mode!="idle"}[5m]) > 0.8
         for: 1m
@@ -71,3 +32,27 @@ groups:
           severity: "critical"
         annotations:
           description: "Redis service is down."
+
+      - alert: HighLatency
+        expr: rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) > 1.0
+        for: 5m
+        labels:
+          severity: "critical"
+        annotations:
+          description: "Request latency is over 1 second for the last 5 minutes."
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status!~'2..'}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: "critical"
+        annotations:
+          description: "Error rate is above 5% for the last 5 minutes."
+
+      - alert: LowApdexScore
+        expr: apdex(http_request_duration_seconds) < 0.8
+        for: 5m
+        labels:
+          severity: "critical"
+        annotations:
+          description: "Apdex score is below 0.8 for the last 5 minutes."
