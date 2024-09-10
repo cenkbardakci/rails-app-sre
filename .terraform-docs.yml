@@ -89,6 +89,14 @@ content: |-
 
   {{ .Inputs }}
   ---
+  
+  ## Examples
+  This strucutred variable holds all informations about frontend module.
+  Example:
+  ### Basic
+  ```terraform
+  {{ include "docs/example-basic.tf" }}
+  ```
   ---
   ## Resources and Output attributes by Module
   ---
