@@ -65,7 +65,9 @@ All enviroments and tools chosed by me. You can change them according to your ne
 
 #### Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 ---
 #### Requirements
 
@@ -87,11 +89,17 @@ No inputs.
 ---
 #### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [aws_instance.rails_app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
+| [aws_key_pair.deployer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair) | resource |
+| [aws_security_group.rails_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 ---
 #### Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_ec2_instance_public_ip"></a> [ec2\_instance\_public\_ip](#output\_ec2\_instance\_public\_ip) | n/a |
 
 ## Versions
 - v1
